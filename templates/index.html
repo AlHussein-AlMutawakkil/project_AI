@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل أمان المواقع</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>تحليل أمان المواقع</h1>
+            <p>تحقق من أمان المواقع باستخدام الذكاء الاصطناعي</p>
+        </div>
+
+        <div class="analysis-form">
+            <form id="urlForm" method="POST">
+                <div class="form-group">
+                    <label for="url">أدخل رابط الموقع:</label>
+                    <input type="url" id="url" name="url" required 
+                           placeholder="https://example.com">
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-search"></i>
+                    تحليل الموقع
+                </button>
+            </form>
+
+            {% if result %}
+            <div class="result {% if result == 'benign' %}safe{% else %}danger{% endif %} show">
+                <h3>نتيجة التحليل:</h3>
+                <p>
+                    {% if result == 'benign' %}
+                        <i class="fas fa-check-circle"></i>
+                        الموقع آمن وموثوق به
+                    {% elif result == 'phishing' %}
+                        <i class="fas fa-exclamation-triangle"></i>
+                        تحذير: هذا الموقع قد يكون موقع تصيد احتيالي
+                    {% elif result == 'malware' %}
+                        <i class="fas fa-virus"></i>
+                        تحذير: هذا الموقع قد يحتوي على برمجيات خبيثة
+                    {% elif result == 'defacement' %}
+                        <i class="fas fa-exclamation-circle"></i>
+                        تحذير: هذا الموقع قد يكون معرضاً للتشويه
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>تحليل متقدم</h3>
+                <p>تحليل شامل للموقع باستخدام خوارزميات الذكاء الاصطناعي</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>نتائج فورية</h3>
+                <p>الحصول على نتائج التحليل بشكل فوري</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>دقة عالية</h3>
+                <p>نسبة دقة تصل إلى 80% في تحديد المواقع الخطرة</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('urlForm').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحليل...';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>
